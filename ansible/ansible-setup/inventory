@@ -1,0 +1,11 @@
+[node]
+10.74.130.158
+
+[devops]
+nagioscore
+jenkins
+gitlab
+awx
+tomcat
+docker
+kibanapro
