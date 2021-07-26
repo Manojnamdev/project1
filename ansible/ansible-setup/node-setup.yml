@@ -1,0 +1,34 @@
+---
+- hosts: localhost
+  become: yes
+  gather_facts: no
+  tasks:
+
+  - name: Create "ansible" user locally
+    user: name=ansible generate_ssh_key=yes ssh_key_bits=2048 ssh_key_file=.ssh/id_rsa
+
+- hosts: node
+  become: yes
+  gather_facts: no
+  tasks:
+
+  - name: create "ansible" user
+    user: 
+      name: ansible
+      password: redhat
+      groups: wheel
+
+  - name: Set password to user
+    shell: echo ansible:redhat | sudo chpasswd
+    no_log: True
+
+  - name: Set authorized key took from file
+    authorized_key:
+      user: ansible
+      state: present
+      key: "{{ lookup('file', '/home/ansible/.ssh/id_rsa.pub') }}"
+
+  - lineinfile:
+      path: /etc/sudoers
+      line: 'ansible ALL=(ALL) NOPASSWD: ALL'
+
