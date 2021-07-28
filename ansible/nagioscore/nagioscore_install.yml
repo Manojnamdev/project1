@@ -31,3 +31,9 @@
       user:
         name: nagios
         group: nagcmd
+    - name: Add apache user to the nagcmd group
+      user:
+        name: apache
+        group: nagcmd
+        append: yes
+
