@@ -1,1 +1,28 @@
 ---
+- name: Nagioscore Installation playbook
+  hosts: nagios
+  become: true
+  gather_facts: no
+  tasks:
+    - name: Install required packages
+      yum:
+        - httpd 
+        - httpd-tools 
+        - php 
+        - gcc 
+        - glibc 
+        - glibc-common 
+        - gd 
+        - gd-devel 
+        - make 
+        - net-snmp
+
+    - name: Ensure group "nagcmd" exists
+      group:
+        name: nagcmd
+        state: present
+
+    - name: Create user "nagios" and add into the "nagcmd" group
+      user:
+        name: nagios
+        group: nagcmd
