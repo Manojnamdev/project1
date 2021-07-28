@@ -6,6 +6,11 @@
   tasks:
     - name: Install required packages
       yum:
+        - mlocate
+        - wget
+        - tree
+        - vim
+        - net-tools
         - httpd 
         - httpd-tools 
         - php 
